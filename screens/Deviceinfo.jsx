@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 import * as Device from "expo-device";
+import Header from "../components/Header";
 
 export default function DeviceInfo() {
   return (
         <View style={styles.container}>
-          <Text style={styles.title}>Informações do Aparelho</Text>
+          <Header style={styles.title} title="Informações do Aparelho" />
     
           <View style={styles.textBox}>
             <Text style={styles.purpleText}>
