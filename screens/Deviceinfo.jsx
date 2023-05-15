@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import * as Device from "expo-device";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function DeviceInfo() {
   return (
@@ -48,6 +49,7 @@ export default function DeviceInfo() {
           <View style={styles.boxBtn}>
             <Text style={styles.textBtn}>Sair</Text>
           </View>
+          <Footer />
         </View>
   );
 }
