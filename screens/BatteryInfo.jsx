@@ -4,10 +4,20 @@ import Footer from "../components/Footer";
 import * as Battery from 'expo-battery';
 
 export default function BatteryInfo() {
+    const [nivelBateria, setNivelBateria] = useState();
+    
+    async function Bateria() {
+        setNivelBateria(Battery.getBatteryLevelAsync());
+    }
+
+    useEffect(() => {
+        Bateria();
+    })
+
     return(
         <View>
             <Header title="Bateria" />
-            <Text>BatteryInfo</Text>
+            <Text> { nivelBateria } </Text>
             <Footer />
         </View>
     )

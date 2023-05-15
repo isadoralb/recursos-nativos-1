@@ -1,9 +1,9 @@
-import { View } from "react-native/types";
+import { View, StyleSheet, Text } from "react-native";
 
-export default function Header() {
+export default function Header({ title }) {
     return (
         <View style={styles.header}>
-            <Text style={styles.headerTextStyle}>Informações do aparelho</Text>
+            <Text style={styles.headerTextStyle}>{title}</Text>
         </View>
     );
 }

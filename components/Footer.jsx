@@ -1,9 +1,10 @@
-import { View } from "react-native/types";
+import { Button, StyleSheet } from "react-native";
+import { View } from "react-native";
 
 export default function Footer() {
     return (
         <View style={styles.footer}>
-            <Text>Footer</Text>
+            <Button title="Sair"></Button>
         </View>
     );
 }
