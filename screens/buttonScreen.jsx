@@ -38,7 +38,13 @@ export default function ButtonScreen(){
             <Text>Nome do dispositivo: {nomeDispositivo} .</Text>
             <Text>Memória: {memoria} .</Text>
             <Text>Versão: {versao} .</Text>
-            <Text>Nível da bateria: {nivelBateria} .</Text>
+            <Text style={{
+                color: nivelBateria <= 100 && nivelBateria >= 80 ? 'green' : nivelBateria <= 79 && nivelBateria >= 50 ? 'yellow' : nivelBateria <= 49 && nivelBateria >= 30 ? 'orange' : 'red',
+                fontWeight: 'bolder'
+            }}>
+             {nivelBateria}%
+            </Text>
+            
             <Button onPress={atualizarTudo} title="click"> 
             WEEE</Button>
         </View>
