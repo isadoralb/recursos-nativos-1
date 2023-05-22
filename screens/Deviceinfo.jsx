@@ -3,7 +3,8 @@ import * as Device from "expo-device";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function DeviceInfo() {
+
+export default function DeviceInfoScreen() {
   return (
         <View style={styles.container}>
           <Header style={styles.title} title="Informações do Aparelho" />

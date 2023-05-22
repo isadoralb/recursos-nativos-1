@@ -4,6 +4,15 @@ import Footer from "../components/Footer";
 import * as Battery from 'expo-battery';
 import { useEffect, useState } from "react";
 
+export const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+});
+
 export default function BatteryInfo() {
     const [nivelBateria, setNivelBateria] = useState();
 
@@ -21,7 +30,7 @@ export default function BatteryInfo() {
     },[])
 
     return(
-        <View>
+        <View style={styles.container}>
             <Header title="Nível da bateria" />
             <Text> { nivelBateria } % </Text>
             <Button title="Atualizar" onPress={ atualizarTudo } />
