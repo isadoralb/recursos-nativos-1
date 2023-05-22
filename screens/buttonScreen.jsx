@@ -45,6 +45,7 @@ export default function ButtonScreen(){
 
     return(
         <View style={styles.container}>
+            
             <Button onPress={ mostrar } title="APARECER"
             >
                 Atualizar

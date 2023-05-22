@@ -30,10 +30,10 @@ export default function BatteryInfo() {
     },[])
 
     return(
-        <View style={styles.container}>
+        <View>
             <Header title="Nível da bateria" />
-            <Text> { nivelBateria } % </Text>
-            <Button title="Atualizar" onPress={ atualizarTudo } />
+            <Text style={styles.container}> { nivelBateria } % </Text>
+            <Button style={styles.container} title="Atualizar" onPress={ atualizarTudo } />
             <Footer />
         </View>
     )
