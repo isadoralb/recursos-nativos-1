@@ -1,15 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
-import * as Device from "expo-device";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import * as ScreenOrientation from 'expo-screen-orientation';       
 import { Button } from "react-native";
 import { useState } from "react";
 
-function Informar(){
-    const[infoooo, setInfoooo] = useState([]);
-    
-}
 
 async function Default(){
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
@@ -32,6 +27,15 @@ async function ForcarInverter(){
 }
 
 export default function ScreenOrientationScreen() {
+
+    const[infoUwU, setInfoUwU] = useState([]);
+    
+    function informar(){
+        setInfoUwU(ScreenOrientation.getOrientationAsync());
+    }
+
+
+
   return (
         <View style={styles.container}>
           <Header style={styles.title} title="Orientação de Tela" />
@@ -44,7 +48,8 @@ export default function ScreenOrientationScreen() {
           <Button style={styles.textBtn} title="Forçar Normal" onPress={ ForcarNormal } />
           <Button style={styles.textBtn} title="Forçar Inverter" onPress={ ForcarInverter } />
           <Button style={styles.textBtn} title="Forçar Normal2" onPress={ ForcarNormal } />
-          <Button style={styles.textBtn} title="Informar" onPress={ Default } />
+          <Button style={styles.textBtn} title="Informar" onPress={ informar } />
+          <Text>{infoUwU}</Text>
         </View>
   );
 }
