@@ -4,6 +4,12 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import * as ScreenOrientation from 'expo-screen-orientation';       
 import { Button } from "react-native";
+import { useState } from "react";
+
+function Informar(){
+    const[infoooo, setInfoooo] = useState([]);
+    
+}
 
 async function Default(){
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
