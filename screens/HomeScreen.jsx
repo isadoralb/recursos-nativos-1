@@ -4,6 +4,7 @@ import DeviceInfoScreen from "./Deviceinfo";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import ButtonScreen from "./buttonScreen";
 import ScreenOrientationScreen from "./ScreenOrientation";
+import NotifyScreen from "./NotifyScreen";
 
 
 const Stack = createMaterialBottomTabNavigator();
@@ -16,6 +17,8 @@ export default function RootNavigation() {
         <Stack.Screen name="BatteryInfo" component={BatteryInfo} />
         <Stack.Screen name="DeviceInfo" component={DeviceInfoScreen} />
         <Stack.Screen name="ButtonScreen" component={ButtonScreen} />
+        <Stack.Screen name="NotifyScreen" component={NotifyScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
 });
 
 export default function ButtonScreen(){
-    const [nomeDispositivo, setNomeDispositivo] = useState();
+    const [nomeDispositivo, setNomeDispositivo] = useState(); 
     const [memoria, setMemoria] = useState();
     const [versao, setVersao] = useState();
     const [nivelBateria, setNivelBateria] = useState();
