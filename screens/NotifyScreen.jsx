@@ -28,7 +28,7 @@ export default function NotifyScreen() {
   async function lerNotificacao(){
     const exemplo = await Notifications.getLastNotificationResponseAsync();
     console.log(exemplo.notification.request.identifier)
-    alert('Notificação', exemplo.content)
+    alert('Notificação', exemplo.notification.request.identifier)
   }
 
 //bateria
