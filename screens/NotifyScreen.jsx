@@ -24,14 +24,11 @@ export default function NotifyScreen() {
   }, [ultimaNotificacao])
 
   //teste de botão n lidas
-  async function lerNotificacaoN(){
-    const exemplo = await Notifications.getPresentedNotificationsAsync();
-  }
 
   async function lerNotificacao(){
     const exemplo = await Notifications.getLastNotificationResponseAsync();
-    Alert.alert('Notificação', exemplo.notification.request.content.title)
-    console.log(exemplo)
+    console.log(exemplo.notification.request.identifier)
+    alert('Notificação', exemplo.content)
   }
 
 //bateria
