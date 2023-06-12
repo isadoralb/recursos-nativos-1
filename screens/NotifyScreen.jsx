@@ -30,6 +30,7 @@ export default function NotifyScreen() {
 
   async function lerNotificacao(){
     const exemplo = await Notifications.getLastNotificationResponseAsync();
+    Alert.alert('Notificação', exemplo.notification.request.content.title)
     console.log(exemplo)
   }
 
@@ -93,7 +94,7 @@ async function Notificar(){
             
             <Button title="Nivel de bateria"
             onPress={ atualizarTudo }></Button>
-            <Button title="Ler Notificação" onPress={ async() => exibirAlerta() }></Button>
+            <Button title="Ler Notificação" onPress={ async() => lerNotificacao() }></Button>
         </View>
   );
 }
