@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import * as Notifications from 'expo-notifications';
@@ -9,32 +9,51 @@ import { useEffect, useState } from "react";
 
 export default function NotifyScreen() {
   const [expoToken, setExpoToken] = useState('');
-  const [nomeDispositivo, setNomeDispositivo] = useState(); 
   const [nivelBateria, setNivelBateria] = useState(0);
-    
+
+  //tentativa de alert
+  const ultimaNotificacao = Notifications.useLastNotificationResponse();
+
+  async function exibirAlerta(){
+        alert(ultimaNotificacao)
+        console.log(ultimaNotificacao)
+    }
+
+  useEffect(() => {
+    exibirAlerta ()
+  }, [ultimaNotificacao])
+
+  //teste de botão n lidas
+  async function lerNotificacaoN(){
+    const exemplo = await Notifications.getPresentedNotificationsAsync();
+  }
+
+  async function lerNotificacao(){
+    const exemplo = await Notifications.getLastNotificationResponseAsync();
+    console.log(exemplo)
+  }
+
+//bateria
+  async function Bateria() {
+    const nivel = await Battery.getBatteryLevelAsync();
+    setNivelBateria(nivel * 100);
+  }
+
+async function atualizarTudo() {
+    await Bateria();
+
+      const token = await Notifications.scheduleNotificationAsync({
+        content: {
+            title: 'aaaaaaaaa'  + nivelBateria + '%',
+            body: nivelBateria,
+        },
+        trigger: { seconds: 2 }
+      })
+      setExpoToken(token);
+}
   
-    async function Bateria() {
-        const nivel = await Battery.getBatteryLevelAsync();
-        setNivelBateria(nivel * 100);
-    }
-
-    async function atualizarTudo() {
-        await Bateria();
-
-        const token = await Notifications.scheduleNotificationAsync({
-            content: {
-                title: 'aaaaaaaaa'  + nivelBateria + '%',
-                body: nivelBateria,
-            },
-            trigger: { seconds: 2 }
-        })
-        setExpoToken(token);
-    }
-
-    
-
-
-  async function Notificar(){
+//nome do dispositivo
+async function Notificar(){
     const token = await Notifications.scheduleNotificationAsync({
         content: {
             title: 'Notificação',
@@ -46,18 +65,17 @@ export default function NotifyScreen() {
     setExpoToken(token);
   }
 
-  /*async function NotificarNome(){
-    setNomeDispositivo(Device.osName);
+  async function NotificarNome(){
 
     const token = await Notifications.scheduleNotificationAsync({
         content: {
-            title: 'O seu dispositivo é:'  + {nomeDispositivo},
-            body: {nomeDispositivo},
+            title: 'O seu dispositivo é: '  + Device.osName,
+            body: Device.osName,
         },
         trigger: { seconds: 2 }
     })
     setExpoToken(token);
-  }*/
+  }
 
 
 
@@ -71,12 +89,11 @@ export default function NotifyScreen() {
             </Button>
             
             <Button title="Nome do dispositivo" 
-            ></Button>
+            onPress={NotificarNome}></Button>
             
             <Button title="Nivel de bateria"
             onPress={ atualizarTudo }></Button>
-            <Button title="Ler Notificação clickada"></Button>
-            <Button title="Enviar Notificação não clickada"></Button>
+            <Button title="Ler Notificação" onPress={ async() => exibirAlerta() }></Button>
         </View>
   );
 }
