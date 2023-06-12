@@ -5,9 +5,10 @@ import * as Notifications from 'expo-notifications';
 import * as Device from "expo-device";
 import * as Battery from 'expo-battery';
 import { useEffect, useState } from "react";
+import BatteryInfo from "./BatteryInfo";
 
 
-export default function NotifyScreen() {
+export default function NotifyScreen({navigation}) {
   const [expoToken, setExpoToken] = useState('');
   const [nivelBateria, setNivelBateria] = useState(0);
 
@@ -23,8 +24,19 @@ export default function NotifyScreen() {
     exibirAlerta ()
   }, [ultimaNotificacao])
 
+ 
+
   //teste de botão n lidas
-  
+   
+
+
+  async function VamoEmbora(){
+    const exemplo = await Notifications.getLastNotificationResponseAsync();
+    console.log(exemplo.notification.request.identifier)
+    alert('Notificação', exemplo.notification.request.identifier)
+    navigation.navigate(BatteryInfo)
+  }
+
 
   async function lerNotificacao(){
     const exemplo = await Notifications.getLastNotificationResponseAsync();
