@@ -24,6 +24,7 @@ export default function NotifyScreen() {
   }, [ultimaNotificacao])
 
   //teste de botão n lidas
+  
 
   async function lerNotificacao(){
     const exemplo = await Notifications.getLastNotificationResponseAsync();
@@ -92,6 +93,7 @@ async function Notificar(){
             <Button title="Nivel de bateria"
             onPress={ atualizarTudo }></Button>
             <Button title="Ler Notificação" onPress={ async() => lerNotificacao() }></Button>
+            <Button title="Vamo embora" onPress={ async() => VamoEmbora() }></Button>
         </View>
   );
 }
