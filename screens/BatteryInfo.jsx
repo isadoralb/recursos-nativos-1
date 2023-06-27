@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
 });
 
-export default function BatteryInfo() {
+export default function BatteryInfo({navigation}) {
     const [nivelBateria, setNivelBateria] = useState();
 
     async function atualizarTudo() {
