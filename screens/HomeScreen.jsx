@@ -19,7 +19,7 @@ export default function RootNavigation() {
         <Stack.Screen name="DeviceInfo" component={DeviceInfoScreen} />
         <Stack.Screen name="ButtonScreen" component={ButtonScreen} />
         <Stack.Screen name="NotifyScreen" component={NotifyScreen} />
-        <Stack.Screen name="ContactInfo" component={ContactsInfo} />
+        <Stack.Screen name="AgendarScreen" component={AgendarScreen} />
             
 
 
