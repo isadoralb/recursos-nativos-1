@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
-import * as Contacts from "expo-contacts";
 import Items from "../components/Items";
 import Header from "../components/Header";
 
