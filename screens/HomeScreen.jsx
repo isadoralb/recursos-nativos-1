@@ -5,7 +5,8 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import ButtonScreen from "./buttonScreen";
 import ScreenOrientationScreen from "./ScreenOrientation";
 import NotifyScreen from "./NotifyScreen";
-import ContactsInfo from "./ContactsInfo";
+import AgendarScreen from "./AgendarScreen";
+import ContactInfo from "./ContactInfo";
 
 
 const Stack = createMaterialBottomTabNavigator();
@@ -20,7 +21,7 @@ export default function RootNavigation() {
         <Stack.Screen name="ButtonScreen" component={ButtonScreen} />
         <Stack.Screen name="NotifyScreen" component={NotifyScreen} />
         <Stack.Screen name="AgendarScreen" component={AgendarScreen} />
-            
+        <Stack.Screen name="ContactInfo" component={ContactInfo} />
 
 
       </Stack.Navigator>
