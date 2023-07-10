@@ -7,6 +7,8 @@ import ScreenOrientationScreen from "./ScreenOrientation";
 import NotifyScreen from "./NotifyScreen";
 import AgendarScreen from "./AgendarScreen";
 import ContactInfo from "./ContactInfo";
+import NewPageScreen from "./NewPageScreen";
+
 
 
 const Stack = createMaterialBottomTabNavigator();
@@ -22,6 +24,7 @@ export default function RootNavigation() {
         <Stack.Screen name="NotifyScreen" component={NotifyScreen} />
         <Stack.Screen name="AgendarScreen" component={AgendarScreen} />
         <Stack.Screen name="ContactInfo" component={ContactInfo} />
+        <Stack.Screen name="NewPageScreen" component={NewPageScreen} />
 
 
       </Stack.Navigator>

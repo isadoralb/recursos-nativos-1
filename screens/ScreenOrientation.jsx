@@ -7,31 +7,49 @@ import { useState } from "react";
 
 
 async function Default(){
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
-}
+    await ScreenOrientation.unlockAsync();
+    setCor("#FF69B4");
+  }
 
-async function DeitarDireita(){
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
-}
+  async function DeitarDireita() {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
+    );
+    setCor("#FF1493");
+  }
 
-async function DeitarEsquerda(){
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
-}
+  async function DeitarEsquerda() {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
+    );
+    setCor("#C71585");
+  }
 
-async function ForcarNormal(){
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-}
+  async function ForcarNormal() {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.PORTRAIT
+    );
+    setCor("#DB7093");
+  }
 
-async function ForcarInverter(){
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_DOWN);
-}
+  async function ForcarInverter() {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.PORTRAIT_DOWN
+    );
+    setCor("#FFB6C1");
+  }
+
+  async function informar() {
+    const orientation = await ScreenOrientation.getOrientationAsync();
+    setInfoUwU(orientation);
+  }
 
 export default function ScreenOrientationScreen() {
 
-    const[infoUwU, setInfoUwU] = useState([]);
+    const[info, setInfo] = useState([]);
     
     function informar(){
-        setInfoUwU(ScreenOrientation.getOrientationAsync());
+        setInfo(ScreenOrientation.getOrientationAsync());
     }
 
 
@@ -49,8 +67,10 @@ export default function ScreenOrientationScreen() {
           <Button style={styles.textBtn} title="Forçar Inverter" onPress={ ForcarInverter } />
           <Button style={styles.textBtn} title="Forçar Normal2" onPress={ ForcarNormal } />
           <Button style={styles.textBtn} title="Informar" onPress={ informar } />
-          <Text>{infoUwU}</Text>
+          <Text>{info}</Text> 
+          <Footer />
         </View>
+       
   );
 }
 

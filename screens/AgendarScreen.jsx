@@ -1,101 +1,41 @@
-import { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform } from 'react-native';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
+import { View, Text, Button, ScrollView } from "react-native";
+import Footer from "../components/Footer";
+import * as Notifications from "expo-notifications";
+import { useState } from "react";
+import { TextInput } from "react-native-paper";
+import Header from "../components/Header";
+import { styles } from "../components/styles";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+export default function AgendamentoNotifi({ navigation }) {
+  const [expoToken, setExpoToken] = useState("");
+  const [title, SetTitle] = useState("a");
+  const [description, SetDescription] = useState("");
+  const [segundos, SetSegundos] = useState(3);
 
-export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
-  useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
+  async function Notificar() {
+    const token = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: title,
+        subtitle: description,
+        body: description,
+      },
+      trigger: { seconds: parseInt(segundos) },
     });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
+    setExpoToken(token);
+  }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-      }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View>
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      />
-    </View>
+    <ScrollView style={styles}>
+        <Header style={styles.title} title="Agendamento de Notificações" />
+
+        <Text> Escreva uma notificação para você receber </Text>
+        <TextInput label="Titulo" value={title} onChangeText={SetTitle}></TextInput>
+        <TextInput label="Descrição" value={description} onChangeText={SetDescription}></TextInput>
+        <TextInput type="Number" label="Quanto tempo vai demorar em segundos" value={segundos} onChangeText={SetSegundos}></TextInput>
+        <Button style={styles.boxBtn}
+         title="Enviar Notificação" onPress={Notificar}>
+        </Button>
+          <Footer />
+    </ScrollView>
   );
-}
-
-
-async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "titulo",
-        body: 'eita bbs',
-      },
-      trigger: { seconds: 2 },
-    });
-  }
-
-async function registerForPushNotificationsAsync() {
-  let token;
-
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
-  }
-
-  return token;
 }

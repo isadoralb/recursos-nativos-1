@@ -23,7 +23,7 @@ export default function NotifyScreen({ navigation }) {
     exibirAlerta();
   }, [ultimaNotificacao]);
 
-  //teste de botão n lidas
+
 
   async function VamoEmbora() {
     const exemplo = await Notifications.getLastNotificationResponseAsync();
@@ -52,7 +52,7 @@ export default function NotifyScreen({ navigation }) {
 
     const token = await Notifications.scheduleNotificationAsync({
       content: {
-        title: "aaaaaaaaa" + nivelBateria + "%",
+        title: "Nivel de Bateria" + nivelBateria + "%",
         body: nivelBateria,
       },
       trigger: { seconds: 2 },

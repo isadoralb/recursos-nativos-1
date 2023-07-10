@@ -1,122 +1,78 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
-import * as Contacts from "expo-device";
+import { Text, View, StyleSheet, Button, FlatList } from "react-native";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-
+import * as Contacts from 'expo-contacts'
+import { useCallback, useEffect, useState } from "react";
+import Items from "../components/Item";
+import { useFocusEffect } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        gap: 10,
+        gap: 10
     },
-
     content: {
         flex: 1,
         gap: 20,
-        padding: 20,
+        padding: 10,
     },
-
-    contentTextStyle: {
-        padding: 5,
-        textAlignVertical: "center",
-        minHeight: 50,
-        backgroundColor: "#969",
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 18,
-        textAlign: "center",
-    },
-
-    body: {
-        flex: 1,
-        gap: 20,
-        padding: 20,
-        alignSelf: "center",
-    },
-
-    searchInput: {
-        height: 40,
-        borderColor: "gray",
-        borderWidth: 1,
-        // borderRadius: 10,
-        paddingHorizontal: 100,
-        marginBottom: 10,
-    },
+    busca: {
+        backgroundColor: "#DDD",
+        padding: 10,
+        height: 50,
+        borderRadius: 10,
+        fontSize: 20
+    }
 });
-
-
-
-
-
+    
 export default function ContactsInfo({ navigation }) {
-    const [contacts, setContacts] = useState([]);
-    const [filteredContacts, setFilteredContacts] = useState([]);
-    const [searchText, setSearchText] = useState("");
+    const [ contacts, setContacts ] = useState();
 
-    useEffect(() => {
-        carregarContatos();
-    }, []);
+    async function carregarContatos(){
+        const { data } = await Contacts.getContactsAsync({
+            fields: [
+                Contacts.Fields.Emails,
+                Contacts.Fields.PhoneNumbers
+            ]
+        })
 
-    const carregarContatos = async () => {
-        const { status } = await Contacts.requestPermissionsAsync();
-        if (status === "granted") {
-            const { data } = await Contacts.getContactsAsync({
-                fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
-            });
-            setContacts(data);
-            setFilteredContacts(data);
-        }
-    };
+        setContacts(data)
+    }
 
-    const filterContacts = (text) => {
-        setSearchText(text);
-        const filtered = contacts.filter((contact) =>
-            contact.name.toLowerCase().includes(text.toLowerCase())
-        );
-        setFilteredContacts(filtered);
+    useFocusEffect(
+        useCallback(() => {
+            (async () => {
+                const { status } = await Contacts
+                    .requestPermissionsAsync();
+                if (status === 'granted') {
+                    await carregarContatos();
+                } 
+            })();
+        }, [])
+    );
 
-    useEffect(() => {
-      (async () => {
-        const { status } = await Contacts.requestPermissionsAsync();
-        if (status === 'granted') {
-          const { data } = await Contacts.getContactsAsync({
-            fields: [Contacts.Fields.Emails],
-          });
-  
-          if (data.length > 0) {
-            const contact = data[0];
-            console.log(contact);
-          }
-        }
-      })();
-    }, []);
-    };
-
-    return (
+    return(
         <View style={styles.container}>
-            <Header title={"Contatos"} />
-            <View style={styles.body}>
-                <Text>Contatos</Text>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Filtrar por nome"
-                    value={searchText}
-                    onChangeText={filterContacts}
-                />
-                <View>
-                    {filteredContacts.length > 0 ? (
-                        <FlatList
+            <Header
+                title="Contatos"
+            />
+            <View style = {styles.content}>
+                {
+                    contacts
+                        ? <FlatList
                             style={{ flex: 1, gap: 10 }}
-                            data={filteredContacts}
+                            data={ contacts }
                             keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => <Items item={item} />}
+                            renderItem={({ item }) => (
+                                <Items 
+                                    item={item}
+                                />
+                            )}
                         />
-                    ) : (
-                        <Text>Nenhum contato encontrado.</Text>
-                    )}
-                </View>
+                        : <Text>Não foi possivel encontrar os contatos</Text>
+                }
+                    <Footer ></Footer>
             </View>
         </View>
-    );
+    )
 }
